@@ -1,0 +1,21 @@
+#include <stdio.h>
+
+typedef int addP(int,int);
+
+void show(addP func, int a, int b){
+
+	printf("%d\n",func(a,b) );
+}
+int add(int a,int b){
+	return a+b;
+}
+int sub(int a, int b){
+  return a-b;
+}
+
+int main(int argc, char const *argv[])
+{
+	int a = 5,b= 3;
+	show(add,a,b);
+	return 0;
+}
