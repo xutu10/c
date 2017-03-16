@@ -1,5 +1,10 @@
 #include<stdio.h>
 
+/* from void * to specific variable must be cast
+   from specific variable to void* no need to be cast
+ */
+
+
 void output(void *text){
 
 	char *out = (char *)text;
@@ -10,7 +15,9 @@ void output(void *text){
 int main(){
 
 	char *text = "hello world";
+	output(text);
 	int a = 0x42;
+	//	output(a);  error must be ptr
 	int *b = &a;
 	output(b);
 	

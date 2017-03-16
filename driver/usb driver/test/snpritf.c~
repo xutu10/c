@@ -1,0 +1,16 @@
+#include<stdio.h>
+
+
+int main(int argc, char *argv[])
+{
+    int a = 10;
+	char b[2];
+
+	if(a < 16)
+		sprintf(b,"0%X",a);
+	
+	printf("%x\n",a);
+	printf("%s\n",b);
+	
+    return 0;
+}

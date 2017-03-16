@@ -1,0 +1,13 @@
+#include<stdio.h>
+
+int main(int argc, char *argv[])
+{
+	// doesn't work
+	char get[5];
+
+	get = "aabb\0";
+
+	printf ("%s\n",get);
+	
+    return 0;
+}

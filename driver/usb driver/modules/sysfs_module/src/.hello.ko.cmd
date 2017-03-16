@@ -1,0 +1,1 @@
+cmd_/home/rob/Desktop/NLV/SYPRO/Material/modules/hello_module/src/hello.ko := ld -r -m elf_i386 -T ./scripts/module-common.lds --build-id  -o /home/rob/Desktop/NLV/SYPRO/Material/modules/hello_module/src/hello.ko /home/rob/Desktop/NLV/SYPRO/Material/modules/hello_module/src/hello.o /home/rob/Desktop/NLV/SYPRO/Material/modules/hello_module/src/hello.mod.o
