@@ -1,0 +1,17 @@
+#include<stdio.h>
+
+int main(){
+
+	printf("   x x     x       x\n");
+	printf("  x  x      x     x\n");
+	printf(" xxxxxxxx    x   x\n");
+	printf("x    x        x x\n");
+	printf("     x         x \n");
+	printf("     x        x x \n");
+	printf("xxxxxxxxxxx  x   x \n");
+	printf("     x      x     x \n");
+	printf("     x     x       x \n");
+
+
+	return 0;
+}
