@@ -1,0 +1,35 @@
+package de.hsrm.cs.wwwvs.filesystem.messages;
+
+import java.nio.ByteBuffer;
+
+public class NewFolderRequest implements Payload {
+	private int parent;
+	private String name;
+
+	public NewFolderRequest(int parent, String name) {
+		super();
+		this.parent = parent;
+		this.name = name;
+	}
+
+	public int getParent() {
+		return parent;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	@Override
+	public void unmarshall(ByteBuffer data) throws MarshallingException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public byte[] marshall() throws MarshallingException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

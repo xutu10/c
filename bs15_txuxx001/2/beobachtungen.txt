@@ -1,0 +1,170 @@
+Dokumentation Aufgabe 2.2 / 2.3
+
+
+Dokumentieren Sie Ihre Beobachtungen!
+
+
+Prozessbaum:
+vater─┬─sh───pstree
+      ├─sohn1
+      └─sohn2
+
+Zeitliche Veraenderungen von Zustand und Prioritaet der Prozesse:
+
+
+son 1 finish date :
+Sat Nov 14 22:40:45 CET 2015
+son2 finish	date: 
+Sat Nov 14 22:40:48 CET 2015
+
+
+
+
+
+2015年 11月 14日 星期六 22:40:47 CET
+USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root       740  4.2  3.4 232772 55888 tty7     Ssl+ 22:11   1:16 /usr/bin/X -cor
+root       749  0.0  0.1   4740  2096 tty1     Ss+  22:11   0:00 /sbin/agetty --
+xutu      6074  0.0  0.3   9564  5484 pts/1    Ss   22:26   0:00 bash
+xutu     10465  0.0  0.0   2092   640 pts/1    S+   22:40   0:00 ./vater
+xutu     10466  0.0  0.0      0     0 pts/1    Z+   22:40   0:00 [sohn1] <defunc
+xutu     10467  100  0.0   2092   636 pts/1    R+   22:40   0:02 [sohn2]
+xutu     10481  0.0  0.0   2332   632 pts/1    S+   22:40   0:00 sh -c ps au
+xutu     10482  0.0  0.1   7256  2564 pts/1    R+   22:40   0:00 ps au
+.
+.
+.
+son2 finish	date: 
+Sat Nov 14 22:40:48 CET 2015
+2015年 11月 14日 星期六 22:40:49 CET
+USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root       740  4.2  3.4 232968 55960 tty7     Ssl+ 22:11   1:16 /usr/bin/X -cor
+root       749  0.0  0.1   4740  2096 tty1     Ss+  22:11   0:00 /sbin/agetty --
+xutu      6074  0.0  0.3   9564  5484 pts/1    Ss   22:26   0:00 bash
+xutu     10465  0.0  0.0   2092   640 pts/1    S+   22:40   0:00 ./vater
+xutu     10466  0.0  0.0      0     0 pts/1    Z+   22:40   0:00 [sohn1] <defunc
+xutu     10467 68.2  0.0      0     0 pts/1    Z+   22:40   0:02 [sohn2] <defunc
+xutu     10496  0.0  0.0   2332   736 pts/1    S+   22:40   0:00 sh -c ps au
+xutu     10497  0.0  0.1   7256  2700 pts/1    R+   22:40   0:00 ps au
+2015年 11月 14日 星期六 22:40:51 CET
+USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root       740  4.2  3.4 232968 55960 tty7     Ssl+ 22:11   1:16 /usr/bin/X -cor
+root       749  0.0  0.1   4740  2096 tty1     Ss+  22:11   0:00 /sbin/agetty --
+xutu      6074  0.0  0.3   9564  5484 pts/1    Ss   22:26   0:00 bash
+xutu     10465  0.0  0.0   2092   640 pts/1    S+   22:40   0:00 ./vater
+xutu     10466  0.0  0.0      0     0 pts/1    Z+   22:40   0:00 [sohn1] <defunc
+xutu     10467 45.5  0.0      0     0 pts/1    Z+   22:40   0:02 [sohn2] <defunc
+xutu     10509  0.0  0.0   2332   704 pts/1    S+   22:40   0:00 sh -c ps au
+xutu     10510  0.0  0.1   7256  2636 pts/1    R+   22:40   0:00 ps au
+2015年 11月 14日 星期六 22:40:53 CET
+USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root       740  4.2  3.4 232968 55960 tty7     Rsl+ 22:11   1:16 /usr/bin/X -cor
+root       749  0.0  0.1   4740  2096 tty1     Ss+  22:11   0:00 /sbin/agetty --
+xutu      6074  0.0  0.3   9564  5484 pts/1    Ss   22:26   0:00 bash
+xutu     10465  0.0  0.0   2092   640 pts/1    S+   22:40   0:00 ./vater
+xutu     10466  0.0  0.0      0     0 pts/1    Z+   22:40   0:00 [sohn1] <defunc
+xutu     10467 34.1  0.0      0     0 pts/1    Z+   22:40   0:02 [sohn2] <defunc
+xutu     10522  0.0  0.0   2332   712 pts/1    S+   22:40   0:00 sh -c ps au
+xutu     10523  0.0  0.1   7256  2692 pts/1    R+   22:40   0:00 ps au
+2015年 11月 14日 星期六 22:40:55 CET
+USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root       740  4.2  3.4 232992 55960 tty7     Rsl+ 22:11   1:16 /usr/bin/X -cor
+root       749  0.0  0.1   4740  2096 tty1     Ss+  22:11   0:00 /sbin/agetty --
+xutu      6074  0.0  0.3   9564  5484 pts/1    Ss   22:26   0:00 bash
+xutu     10465  0.0  0.0   2092   640 pts/1    S+   22:40   0:00 ./vater
+xutu     10466  0.0  0.0      0     0 pts/1    Z+   22:40   0:00 [sohn1] <defunc
+xutu     10467 27.3  0.0      0     0 pts/1    Z+   22:40   0:02 [sohn2] <defunc
+xutu     10535  0.0  0.0   2332   720 pts/1    S+   22:40   0:00 sh -c ps au
+xutu     10536  0.0  0.1   7256  2628 pts/1    R+   22:40   0:00 ps au
+2015年 11月 14日 星期六 22:40:57 CET
+USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root       740  4.2  3.4 232992 55960 tty7     Rsl+ 22:11   1:16 /usr/bin/X -cor
+root       749  0.0  0.1   4740  2096 tty1     Ss+  22:11   0:00 /sbin/agetty --
+xutu      6074  0.0  0.3   9564  5484 pts/1    Ss   22:26   0:00 bash
+xutu     10465  0.0  0.0   2092   640 pts/1    S+   22:40   0:00 ./vater
+xutu     10466  0.0  0.0      0     0 pts/1    Z+   22:40   0:00 [sohn1] <defunc
+xutu     10467 22.7  0.0      0     0 pts/1    Z+   22:40   0:02 [sohn2] <defunc
+xutu     10548  0.0  0.0   2332   700 pts/1    S+   22:40   0:00 sh -c ps au
+xutu     10549  0.0  0.1   7256  2696 pts/1    R+   22:40   0:00 ps au
+
+
+
+
+Aenderung MAX_COUNT und Prozesszustaende:
+
+Max_COUNT von 100000000 zu 300000000
+son 1 finish date :
+Sat Nov 14 22:44:03 CET 2015
+son2 finish	date: 
+Sat Nov 14 22:44:11 CET 2015
+
+
+
+
+2015年 11月 14日 星期六 22:44:05 CET
+USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root       740  4.3  3.5 234544 57716 tty7     Ssl+ 22:11   1:25 /usr/bin/X -cor
+root       749  0.0  0.1   4740  2096 tty1     Ss+  22:11   0:00 /sbin/agetty --
+xutu      6074  0.0  0.3   9564  5484 pts/1    Ss   22:26   0:00 bash
+xutu     11445  0.0  0.0   2092   644 pts/1    S+   22:44   0:00 ./vater
+xutu     11446  0.0  0.0      0     0 pts/1    Z+   22:44   0:00 [sohn1] <defunc
+xutu     11447  100  0.0   2092   596 pts/1    R+   22:44   0:02 [sohn2]
+xutu     11461  0.0  0.0   2332   708 pts/1    S+   22:44   0:00 sh -c ps au
+xutu     11462  0.0  0.1   7256  2640 pts/1    R+   22:44   0:00 ps au
+
+2015年 11月 14日 星期六 22:44:07 CET
+USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root       740  4.3  3.5 234544 57716 tty7     Ssl+ 22:11   1:25 /usr/bin/X -cor
+root       749  0.0  0.1   4740  2096 tty1     Ss+  22:11   0:00 /sbin/agetty --
+xutu      6074  0.0  0.3   9564  5484 pts/1    Ss   22:26   0:00 bash
+xutu     11445  0.0  0.0   2092   644 pts/1    S+   22:44   0:00 ./vater
+xutu     11446  0.0  0.0      0     0 pts/1    Z+   22:44   0:00 [sohn1] <defunc
+xutu     11447  100  0.0   2092   596 pts/1    R+   22:44   0:04 [sohn2]
+xutu     11474  0.0  0.0   2332   652 pts/1    S+   22:44   0:00 sh -c ps au
+xutu     11475  0.0  0.1   7256  2560 pts/1    R+   22:44   0:00 ps au
+
+2015年 11月 14日 星期六 22:44:09 CET
+USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root       740  4.3  3.5 234544 57716 tty7     Ssl+ 22:11   1:25 /usr/bin/X -cor
+root       749  0.0  0.1   4740  2096 tty1     Ss+  22:11   0:00 /sbin/agetty --
+xutu      6074  0.0  0.3   9564  5484 pts/1    Ss   22:26   0:00 bash
+xutu     11445  0.0  0.0   2092   644 pts/1    S+   22:44   0:00 ./vater
+xutu     11446  0.0  0.0      0     0 pts/1    Z+   22:44   0:00 [sohn1] <defunc
+xutu     11447  100  0.0   2092   596 pts/1    R+   22:44   0:06 [sohn2]
+xutu     11487  0.0  0.0   2332   732 pts/1    S+   22:44   0:00 sh -c ps au
+xutu     11488  0.0  0.1   7256  2556 pts/1    R+   22:44   0:00 ps au
+
+2015年 11月 14日 星期六 22:44:11 CET
+USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root       740  4.3  3.5 234544 57716 tty7     Ssl+ 22:11   1:25 /usr/bin/X -cor
+root       749  0.0  0.1   4740  2096 tty1     Ss+  22:11   0:00 /sbin/agetty --
+xutu      6074  0.0  0.3   9564  5484 pts/1    Ss   22:26   0:00 bash
+xutu     11445  0.0  0.0   2092   644 pts/1    S+   22:44   0:00 ./vater
+xutu     11446  0.0  0.0      0     0 pts/1    Z+   22:44   0:00 [sohn1] <defunc
+xutu     11447 99.5  0.0      0     0 pts/1    Z+   22:44   0:07 [sohn2] <defunc
+xutu     11502  0.0  0.0   2332   680 pts/1    S+   22:44   0:00 sh -c ps au
+xutu     11503  0.0  0.1   7256  2692 pts/1    R+   22:44   0:00 ps au
+2015年 11月 14日 星期六 22:44:13 CET
+USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root       740  4.3  3.5 234544 57716 tty7     Ssl+ 22:11   1:25 /usr/bin/X -cor
+root       749  0.0  0.1   4740  2096 tty1     Ss+  22:11   0:00 /sbin/agetty --
+xutu      6074  0.0  0.3   9564  5484 pts/1    Ss   22:26   0:00 bash
+xutu     11445  0.0  0.0   2092   644 pts/1    S+   22:44   0:00 ./vater
+xutu     11446  0.0  0.0      0     0 pts/1    Z+   22:44   0:00 [sohn1] <defunc
+xutu     11447 79.6  0.0      0     0 pts/1    Z+   22:44   0:07 [sohn2] <defunc
+xutu     11515  0.0  0.0   2332   684 pts/1    S+   22:44   0:00 sh -c ps au
+xutu     11516  0.0  0.1   7256  2692 pts/1    R+   22:44   0:00 ps au
+2015年 11月 14日 星期六 22:44:15 CET
+USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root       740  4.3  3.5 234544 57716 tty7     Ssl+ 22:11   1:25 /usr/bin/X -cor
+root       749  0.0  0.1   4740  2096 tty1     Ss+  22:11   0:00 /sbin/agetty --
+xutu      6074  0.0  0.3   9564  5484 pts/1    Ss   22:26   0:00 bash
+xutu     11445  0.0  0.0   2092   644 pts/1    S+   22:44   0:00 ./vater
+xutu     11446  0.0  0.0      0     0 pts/1    Z+   22:44   0:00 [sohn1] <defunc
+xutu     11447 66.3  0.0      0     0 pts/1    Z+   22:44   0:07 [sohn2] <defunc
+xutu     11528  0.0  0.0   2332   680 pts/1    S+   22:44   0:00 sh -c ps au
+xutu     11529  0.0  0.1   7256  2600 pts/1    R+   22:44   0:00 ps au
+
+
+
+Arbeitsweise des Schedulers (Optional, Aufgabe 2.3):

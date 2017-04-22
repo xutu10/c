@@ -1,0 +1,36 @@
+Bewertungsbogen Blatt 3
+
+Name: txuxx001                         Ihre Punkte -------------.
+                                       moegliche Punkte ----.    \
+                                                             \    \
+                                                              v    v
+gross() Korrekte Funktionalitaet / geforderte Ein-/Ausgaben   2 /  1,5
+            - Das Programm funktioniert nur mit maximal 99 eingegeben Zeichen (-0,5)
+  und   Korrekte Verwendung der Register bei den Syscalls     1 /  1
+klein() Prolog / Epilog main(), gross() und klein()           1 /  1
+        Parameteruebergabe in $a0 .. $a3                      1 /  0
+            - fehlt, $t0 verwendet
+        Return in $v0                                         1 /  1
+        Register $s0 .. $s7 vor Verwendung gesichert          1 /  1
+tausche() Korrekte Funktionalitaet / geforderte Ausgaben      3 /  2
+            - Parameterübergabe per $t0 und $t1 (-1)
+        Prolog / Epilog tausche()                             1 /  1
+        Analyse                                               2 /  1
+            - Abhängigkeit zu String-Länge? (-1)
+pascal() Korrekte Funktionalitaet / geforderte Ein-/Ausgaben  2 /  2
+        Prolog / Epilog main() und pascal()                   1 /  1
+        Parameteruebergabe in $a0 .. $a3                      1 /  0
+            - fehlt
+        Return in $v0                                         1 /  1
+        Register $s0 .. $s7 vor Verwendung gesichert          1 /  1
+        Stack-Pointer $sp korrekt                             1 /  1
+Extrapunkt: keine Crashes                                    +1 /  1
+Abzuege Lesbarkeit / Kommentare                              -3 /  0
+
+Gesamtpunkte:                                 maximal 20 von 21 / 17,5
+
+Code-Review gross / klein / tausche:
+
+Code-Review pascal:
+
+Coding-Style:

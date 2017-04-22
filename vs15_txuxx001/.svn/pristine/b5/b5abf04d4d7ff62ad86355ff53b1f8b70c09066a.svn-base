@@ -1,0 +1,63 @@
+#include <vfilesystem_api.h>
+
+FolderID fs_init() {
+asdfsdaf
+	char* message = "tu hat keine ahnung";
+	return 0;
+}
+
+void fs_destroy() {
+}
+
+int32_t fs_delete_file(FileID file) {
+	return 0;
+}
+
+int32_t fs_delete_folder(FolderID folder) {
+	return 0;
+}
+
+FolderID fs_get_file_parent(FileID file) {
+	return 0;
+}
+
+int32_t fs_get_file_size(FileID file) {
+	return 0;
+}
+
+int32_t fs_get_file_name_length(FileID file) {
+	return 0;
+}
+
+int32_t fs_get_file_name(FileID file, char* file_name, uint8_t max_length) {
+	return 0;
+}
+
+FolderID fs_get_folder_parent(FolderID folder) {
+	return 0;
+}
+
+int32_t fs_get_folder_name_length(FolderID folder) {
+	return 0;
+}
+
+int32_t fs_get_folder_name(FolderID folder, char* folder_name, uint32_t max_length) {
+	return 0;
+}
+
+int32_t fs_get_folder_file_count(FolderID folder) {
+	return 0;
+}
+
+int32_t fs_get_folder_folder_count(FolderID folder) {
+	return 0;
+}
+
+int32_t fs_get_folder_files(FolderID folder, FileID* files, uint32_t max_num_files) {
+	return 0;
+}
+
+int32_t fs_get_folder_folders(FolderID folder, FolderID* folders, uint32_t max_num_folders) {
+	return 0;
+}
+

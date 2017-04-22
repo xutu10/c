@@ -1,0 +1,325 @@
+package de.hsrm.cs.wwwvs.filesystem.gateway;
+
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
+
+import de.hsrm.cs.wwwvs.filesystem.Filesystem;
+import de.hsrm.cs.wwwvs.filesystem.messages.*;
+import de.hsrm.cs.wwwvs.filesystem.messages.marshalling.Marshaller.MarshallingException;
+
+public class FilesystemImpl implements Filesystem {
+
+	PayloadType plType;
+	Payload plRequest;
+	Payload plResponse;
+	FileServerMessage msgRequest;
+	FileServerMessage msgResponse;
+	Connection con;
+
+	public FilesystemImpl(Connection con) {
+		this.con = con;
+	}
+
+	@Override
+	public int get_root_folder() throws IOException {
+		plRequest = new NewFolderRequest(1, "root"); // root ID 0? 1?
+		plType = PayloadType.NEW_FOLDER_REQUEST;
+		msgRequest = new FileServerMessage(plType, plRequest);
+
+		try {
+			msgResponse = con.remoteOperation(msgRequest);
+		} catch (MarshallingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		plResponse = msgResponse.getPayload();
+		NewFolderResponse response = (NewFolderResponse) plResponse;
+
+		return response.getHandle();
+	}
+
+	@Override
+	public int new_file(String name, int parent) throws IOException {
+
+		plRequest = new NewFileRequest(parent, name);
+		plType = PayloadType.NEW_FILE_REQUEST;
+		msgRequest = new FileServerMessage(plType, plRequest);
+
+		try {
+			msgResponse = con.remoteOperation(msgRequest);
+		} catch (MarshallingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		plResponse = msgResponse.getPayload();
+		NewFileResponse response = (NewFileResponse) plResponse;
+
+		return response.getHandle();
+	}
+
+	@Override
+	public int new_folder(String name, int parent) throws IOException {
+		plRequest = new NewFolderRequest(parent, name);
+		plType = PayloadType.NEW_FOLDER_REQUEST;
+		msgRequest = new FileServerMessage(plType, plRequest);
+
+		try {
+			msgResponse = con.remoteOperation(msgRequest);
+		} catch (MarshallingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		plResponse = msgResponse.getPayload();
+		NewFolderResponse response = (NewFolderResponse) plResponse;
+
+		return response.getHandle();
+	}
+
+	@Override
+	public void delete_file(int file) throws IOException {
+		plRequest = new DeleteFileRequest(file);
+		plType = PayloadType.DELETE_FILE_REQUEST;
+		msgRequest = new FileServerMessage(plType, plRequest);
+
+		try {
+			msgResponse = con.remoteOperation(msgRequest);
+		} catch (MarshallingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	@Override
+	public void delete_folder(int folder) throws IOException {
+		plRequest = new DeleteFolderRequest(folder);
+		plType = PayloadType.DELETE_FOLDER_REQUEST;
+		msgRequest = new FileServerMessage(plType, plRequest);
+
+		try {
+			msgResponse = con.remoteOperation(msgRequest);
+		} catch (MarshallingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public int get_file_parent(int file) throws IOException {
+		plRequest = new FileInfoRequest(file);
+		plType = PayloadType.FILE_INFO_REQUEST;
+		msgRequest = new FileServerMessage(plType, plRequest);
+
+		try {
+			msgResponse = con.remoteOperation(msgRequest);
+		} catch (MarshallingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		plResponse = msgResponse.getPayload();
+		FileInfoResponse response = (FileInfoResponse) plResponse;
+
+		return response.getParent();
+	}
+
+	@Override
+	public int get_file_size(int file) throws IOException {
+		plRequest = new FileInfoRequest(file);
+		plType = PayloadType.FILE_INFO_REQUEST;
+		msgRequest = new FileServerMessage(plType, plRequest);
+
+		try {
+			msgResponse = con.remoteOperation(msgRequest);
+		} catch (MarshallingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		plResponse = msgResponse.getPayload();
+		FileInfoResponse response = (FileInfoResponse) plResponse;
+
+		return response.getSize();
+	}
+
+	@Override
+	public String get_file_name(int file) throws IOException {
+		plRequest = new FileInfoRequest(file);
+		plType = PayloadType.FILE_INFO_REQUEST;
+		msgRequest = new FileServerMessage(plType, plRequest);
+
+		try {
+			msgResponse = con.remoteOperation(msgRequest);
+		} catch (MarshallingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		plResponse = msgResponse.getPayload();
+		FileInfoResponse response = (FileInfoResponse) plResponse;
+
+		return response.getName();
+	}
+
+	@Override
+	public int get_folder_parent(int folder) throws IOException {
+		plRequest = new FolderInfoRequest(folder);
+		plType = PayloadType.FOLDER_INFO_REQUEST;
+		msgRequest = new FileServerMessage(plType, plRequest);
+
+		try {
+			msgResponse = con.remoteOperation(msgRequest);
+		} catch (MarshallingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		plResponse = msgResponse.getPayload();
+		FolderInfoResponse response = (FolderInfoResponse) plResponse;
+
+		return response.getParent();
+	}
+
+	@Override
+	public String get_folder_name(int folder) throws IOException {
+		plRequest = new FolderInfoRequest(folder);
+		plType = PayloadType.FOLDER_INFO_REQUEST;
+		msgRequest = new FileServerMessage(plType, plRequest);
+
+		try {
+			msgResponse = con.remoteOperation(msgRequest);
+		} catch (MarshallingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		plResponse = msgResponse.getPayload();
+		FolderInfoResponse response = (FolderInfoResponse) plResponse;
+
+		return response.getName();
+
+	}
+
+	@Override
+	public int get_folder_file_count(int folder) throws IOException {
+		plRequest = new FolderInfoRequest(folder);
+		plType = PayloadType.FOLDER_INFO_REQUEST;
+		msgRequest = new FileServerMessage(plType, plRequest);
+
+		try {
+			msgResponse = con.remoteOperation(msgRequest);
+		} catch (MarshallingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		plResponse = msgResponse.getPayload();
+		FolderInfoResponse response = (FolderInfoResponse) plResponse;
+
+		return response.getFiles().length;
+	}
+
+	@Override
+	public int get_folder_folder_count(int folder) throws IOException {
+		plRequest = new FolderInfoRequest(folder);
+		plType = PayloadType.FOLDER_INFO_REQUEST;
+		msgRequest = new FileServerMessage(plType, plRequest);
+
+		try {
+			msgResponse = con.remoteOperation(msgRequest);
+		} catch (MarshallingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		plResponse = msgResponse.getPayload();
+		FolderInfoResponse response = (FolderInfoResponse) plResponse;
+
+		return response.getFolders().length;
+	}
+
+	@Override
+	public List<Integer> get_folder_files(int folder) throws IOException {
+		plRequest = new FolderInfoRequest(folder);
+		plType = PayloadType.FOLDER_INFO_REQUEST;
+		msgRequest = new FileServerMessage(plType, plRequest);
+
+		try {
+			msgResponse = con.remoteOperation(msgRequest);
+		} catch (MarshallingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		plResponse = msgResponse.getPayload();
+		FolderInfoResponse response = (FolderInfoResponse) plResponse;
+		int[] tmpfiles = response.getFiles();
+		Integer[] tmp = new Integer[tmpfiles.length];
+		for (int i = 0; i < tmpfiles.length; i++)
+			tmp[i] = tmpfiles[i];
+
+		return Arrays.asList(tmp); // from Integer[] to list
+	}
+
+	@Override
+	public List<Integer> get_folder_folders(int folder) throws IOException {
+		plRequest = new FolderInfoRequest(folder);
+		plType = PayloadType.FOLDER_INFO_REQUEST;
+		msgRequest = new FileServerMessage(plType, plRequest);
+
+		try {
+			msgResponse = con.remoteOperation(msgRequest);
+		} catch (MarshallingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		plResponse = msgResponse.getPayload();
+		FolderInfoResponse response = (FolderInfoResponse) plResponse;
+		int[] tmpfolders = response.getFiles();
+		Integer[] tmp = new Integer[tmpfolders.length];
+		for (int i = 0; i < tmpfolders.length; i++)
+			tmp[i] = tmpfolders[i];
+
+		return Arrays.asList(tmp); // from Integer[] to list
+	}
+
+	@Override
+	public void write_file(int file, int offset, byte[] data) throws IOException {
+		plRequest = new WriteFileRequest(file, offset, data);
+		plType = PayloadType.WRITE_FILE_REQUEST;
+		msgRequest = new FileServerMessage(plType, plRequest);
+
+		try {
+			msgResponse = con.remoteOperation(msgRequest); 
+		} catch (MarshallingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	@Override
+	public byte[] read_file(int file, int offset, int length) throws IOException {
+		plRequest = new ReadFileRequest(file, offset, length);
+		plType = PayloadType.READ_FILE_REQUEST;
+		msgRequest = new FileServerMessage(plType, plRequest);
+
+		try {
+			msgResponse = con.remoteOperation(msgRequest);
+		} catch (MarshallingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		plResponse = msgResponse.getPayload();
+		ReadFileResponse response = (ReadFileResponse) plResponse;
+
+		return response.getData();
+	}
+
+}

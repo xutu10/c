@@ -1,0 +1,231 @@
+Dokumentation Aufgabe 5
+========================
+
+Dokumentieren Sie Ihre Beobachtungen!
+
+
+Aufgabe 5.1 (f)
+----------------
+sig_empf1.c
+Timer abgelaufen 
+Timer abgelaufen 
+Timer abgelaufen 
+Singal SIGUSR1 emfangen 
+Timer abgelaufen 
+Singal SIGUSR2 emfangen 
+Timer abgelaufen 
+Timer abgelaufen 
+Timer abgelaufen 
+Timer abgelaufen 
+Programmende 
+
+--SIGKILL 
+Killed
+
+Aufgabe 5.2 (d)
+----------------
+nichts passiert. 
+Prozess von sig_sender und sig_empf1 gehoeren nicht zur einer Prozessgruppe.
+
+
+Aufgabe 5.3 (g)
+----------------
+
+
+
+Aufgabe 5.3 (h)
+----------------
+
+
+
+Aufgabe 5.4 (e)
+----------------
+
+
+
+Aufgabe 5.5 (f)
+----------------
+---- nummer = 2, sleep1 =3, sleep2 =3
+verbr2.c
+   pid 1
+   counter 0
+   message :0:
+pid :0:
+counter i am thread 0
+message i am thread 1
+   pid 1
+   counter 0
+   message :2:
+pid :2:
+counter i am thread 1
+message i am thread 0
+pid 0
+counter :4:
+message 1
+pid i am thread 0
+counter :4:
+message i am thread 1
+pid 0
+counter :6:
+message i am thread 0
+   pid 1
+   counter 0
+   message :7:
+pid :7:
+counter i am thread 1
+message i am thread 0
+pid 0
+counter 1
+message :9:
+pid :9:
+counter i am thread 0
+message i am thread 1
+
+---- nummer = 3, sleep1 =1, sleep2 =5
+verbr2.c
+   pid 1
+   counter 0
+   message 2
+pid :0:
+counter :0:
+message i am thread 1
+pid i am thread 0
+counter 1
+message 0
+pid :2:
+counter :2:
+message :2:
+pid i am thread 1
+counter i am thread 2
+message i am thread 0
+   pid 1
+   counter 2
+   message 0
+pid :5:
+counter :5:
+message :5:
+pid i am thread 1
+counter i am thread 2
+message i am thread 0
+      pid 2
+      counter 1
+      message 0
+pid :8:
+counter :8:
+message :8:
+pid i am thread 2
+counter i am thread 1
+message i am thread 0
+
+---- nummer = 3, sleep1 =5, sleep2 =1
+verbr2.c
+      pid 2
+      counter 0
+      message 1
+pid :0:
+counter :0:
+message :0:
+pid i am thread 0
+counter i am thread 1
+message i am thread 2
+pid 0
+counter 1
+message 2
+pid :3:
+counter :3:
+message :3:
+pid i am thread 1
+counter i am thread 0
+message i am thread 2
+   pid 1
+   counter 0
+   message 2
+pid :6:
+counter :6:
+message :6:
+pid i am thread 0
+counter i am thread 1
+message i am thread 2
+pid 0
+counter 1
+message 2
+pid :9:
+counter :9:
+message :9:
+pid i am thread 0
+counter i am thread 1
+message i am thread 2
+
+Aufgabe 5.5 (g)
+----------------
+---- nummber =3, sleep1 =1, sleep2 =5 with mutex
+verbr2.c
+          pid 2
+          counter :0:
+          message i am thread 2
+pid 0
+counter :1:
+message i am thread 0
+pid 0
+counter :2:
+message i am thread 0
+pid 0
+counter :3:
+message i am thread 0
+pid 0
+counter :4:
+message i am thread 0
+pid 0
+counter :5:
+message i am thread 0
+pid 0
+counter :6:
+message i am thread 0
+pid 0
+counter :7:
+message i am thread 0
+pid 0
+counter :8:
+message i am thread 0
+pid 0
+counter :9:
+message i am thread 0
+pid 0
+counter :10:
+message i am thread 0
+pid 0
+counter :11:
+message i am thread 0
+pid 0
+counter :12:
+message i am thread 0
+pid 0
+counter :13:
+message i am thread 0
+pid 0
+counter :14:
+message i am thread 0
+pid 0
+counter :15:
+message i am thread 0
+pid 0
+counter :16:
+message i am thread 0
+pid 0
+counter :17:
+message i am thread 0
+pid 0
+counter :18:
+message i am thread 0
+pid 0
+counter :19:
+message i am thread 0
+     pid 1
+     counter :20:
+     message i am thread 1
+          pid 2
+          counter :21:
+          message i am thread 2
+
+
+

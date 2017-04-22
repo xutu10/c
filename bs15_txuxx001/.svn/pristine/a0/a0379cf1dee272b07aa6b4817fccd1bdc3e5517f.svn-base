@@ -1,0 +1,38 @@
+Bewertungsbogen Blatt 2
+
+Name: txuxx001                         Ihre Punkte -------------.
+                                       moegliche Punkte ----.    \
+                                                             \    \
+                                                              v    v
+vater.c Soehne erzeugen korrekt umgesetzt                     3 /  3
+        Warten auf Beendigung der Soehne korrekt umgesetzt    3 /  2
+            - Funktioniert, aber Ausgaben fehlen (-1)
+        Sonstige Programmlogik Vater                          2 /  2
+        Geforderte Ausgaben                                   1 /  1
+sohn*.c Ueberlagerung in Soehnen korrekt umgesetzt / exec()   3 /  2
+            - Argumentvektor falsch/fehlerhaft (-1)
+        Sonstige Programmlogik Soehne                         2 /  1
+            - sohn1: sleep() fehlt (-1)
+        Geforderte Ausgaben                                   1 /  1
+2.2 (a) MAX_COUNT angepasst                                   1 /  1
+2.2 (b) Erweiterung                                           1 /  1
+2.2 (c) Prozessbaum vorhanden                                 1 /  1
+2.2 (d) Beschreibung                                          1 /  1
+2.2 (d) Zombies erkannt                                       1 /  0
+    - Möglicherweise, aber Beschreibung fehlt (-1)
+Abzuege bei fehlender Return-Code-Behandlung                 -3 /  0
+    - Möglicher Fehler von fork() nicht geprüft (-1)
+Abzuege bei Compiler-Warnungen                               -2 /  -0,5
+    - Es verbleiben einige Warnings (-0,5)
+Abzuege Lesbarkeit / Kommentare                              -2 /  0
+
+Gesamtpunkte:                                                20 / 15,5
+
+Bemerkungen:
+
+- Compiler-Warnungen:
+
+- Fehlerbehandlung:
+
+Coding-Style:
+- Einrückungen:

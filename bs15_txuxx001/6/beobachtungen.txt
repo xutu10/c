@@ -1,0 +1,42 @@
+Dokumentation Aufgabe 6.1 (f)
+==============================
+
+Ihre Bebachtungen beim Auslesen des Puffer
+-------------------------------------------
+13090 0: bbbbbbbaaa
+
+13090 1: bbbbbbbbaa
+
+13089 3: abbbbbbbbb
+
+13089 4: aaaabbbbbb
+
+13089 5: aaabbbbbbb
+
+13090 5: bbbbaaaaaa
+
+13089 6: aaaaaaaabb
+
+13090 6: bbbbbaaaaa
+
+13089 7: aaabbbbbbb
+
+13090 7: bbaaaaaaaa
+
+13090 7: bbbbbbbbbb
+
+13089 8: aaaaaaaaaa
+
+13090 8: bbbbbbbbba
+
+13089 9: aaaaaaaaaa
+
+13090 9: bbbbbbbbaa
+
+13090 9: bbbbbbbbbb
+
+
+Was passiert beim Loeschen des SHM?
+------------------------------------
+
+nach dem Loeschen koennen Schreiber und Leser noch schreiben und lesen wie normalfall.

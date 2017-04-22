@@ -1,0 +1,41 @@
+Bewertungsbogen Blatt 4
+
+Name: txuxx001                         Ihre Punkte -------------.
+                                       moegliche Punkte ----.    \
+                                                             \    \
+                                                              v    v
+gibaus  Threads erstellen und joinen                          2 /  2
+        Ausgaben                                              1 /  1
+        Korrekte Verwendung Semaphoren (1 Sem)                2 /  1,5
+            - sem_destroy() fehlt (-0,5)
+        Korrekte Verwendung Mutexe (1 Mutex)                  2 /  2
+
+philo   Threads erstellen und joinen                          1 /  1
+        Synchronisierung korrekt (1 Mutex, 5 CVs)             4 /  2,5
+            - Initialisierung des state-Arrays fehlt (-0,5)
+            - Condition Variablen werden niemals initialisiert (-1)
+        Variable Anzahl Philosophen                           1 /  1
+        Test und Dokumentation                                1 /  1
+
+backen  Threads erstellen und joinen                          1 /  1
+        Ausgaben                                              1 /  1
+        Synchronisierung korrekt (1 Mutex, 2 CVs)             4 /  4
+        Mehrere Baecker (Bonus)                               1 /  0
+            - fehlt
+
+Abzuege bei fehlender Return-Code-Behandlung                 -3 /  -1
+    - Assertions sind nicht ausreichend/angebracht. (-1)
+      
+Abzuege bei Compiler-Warnungen                               -2 /  -0,5
+    - Warnings Typkonvertierung verbleiben (-0,5)
+Abzuege Lesbarkeit / Kommentare                              -2 /  0
+
+Gesamtpunkte:                                 maximal 20 von 21 / 16,5
+
+Gibaus:
+
+Philosophen:
+
+Baeckerei:
+
+Coding-Style:

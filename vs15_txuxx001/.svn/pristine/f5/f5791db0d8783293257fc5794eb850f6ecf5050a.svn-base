@@ -1,0 +1,307 @@
+package de.hsrm.cs.wwwvs.filesystem.messages;
+
+import java.nio.ByteBuffer;
+
+import de.hsrm.cs.wwwvs.filesystem.messages.marshalling.Marshaller;
+
+public class FileServerMessage implements Marshaller {
+	private PayloadType payloadType;
+	private Payload payload;
+
+	public FileServerMessage() {
+		super();
+	}
+
+	public FileServerMessage(PayloadType payloadType, Payload payload) {
+		super();
+		this.payloadType = payloadType;
+		this.payload = payload;
+	}
+
+	public PayloadType getPayloadType() {
+
+		return payloadType;
+	}
+
+	public Payload getPayload() {
+		return payload;
+	}
+
+	@Override
+	public byte[] marshall() throws MarshallingException {
+
+		switch (payloadType) {
+		case NEW_FILE_REQUEST: {
+			NewFileRequest tmp = (NewFileRequest) this.payload;
+			int msgLength = 4 + 1 + 4 + tmp.getName().length(); 					// total lenth of message
+																					
+			byte[] request = new byte[msgLength];
+			request[0] = (byte) (msgLength >> 24);						 	// length of message from int
+																			// to byte as "big endian"
+			request[1] = (byte) (msgLength >> 16);
+			request[2] = (byte) (msgLength >> 8);
+			request[3] = (byte) msgLength;
+			request[4] = 1;														 // type of message
+			request[5] = (byte) (tmp.getParent() >> 24); 						// length of filename
+																				// from int to byte
+			request[6] = (byte) (tmp.getParent() >> 16);
+			request[7] = (byte) (tmp.getParent() >> 8);
+			request[8] = (byte) tmp.getParent();
+			byte[] fileName = tmp.getName().getBytes(); 						// filename in byte store
+														
+			for (int i = 0; i < tmp.getName().length(); i++)
+				request[9 + i] = fileName[i];
+			return request;
+		}
+		case NEW_FOLDER_REQUEST: {
+			NewFolderRequest tmp = (NewFolderRequest) this.payload;
+			int msgLength = 4 + 1 + 4 + tmp.getName().length();
+			byte[] request = new byte[msgLength];
+			request[0] = (byte) (msgLength >> 24);
+			request[1] = (byte) (msgLength >> 16);
+			request[2] = (byte) (msgLength >> 8);
+			request[3] = (byte) msgLength;
+			request[4] = 3;
+			request[5] = (byte) (tmp.getParent() >> 24);
+			request[6] = (byte) (tmp.getParent() >> 16);
+			request[7] = (byte) (tmp.getParent() >> 8);
+			request[8] = (byte) tmp.getParent();
+			byte[] folderName = tmp.getName().getBytes();
+			for (int i = 0; i < tmp.getName().length(); i++)
+				request[9 + i] = folderName[i];
+			return request;
+		}
+		case DELETE_FILE_REQUEST: {
+			DeleteFileRequest tmp = (DeleteFileRequest) this.payload;
+			int msgLength = 4 + 1 + 4;
+			byte[] request = new byte[msgLength];
+			request[0] = (byte) (msgLength >> 24);
+			request[1] = (byte) (msgLength >> 16);
+			request[2] = (byte) (msgLength >> 8);
+			request[3] = (byte) msgLength;
+			request[4] = 5;
+			request[5] = (byte) (tmp.getHandle() >> 24);
+			request[6] = (byte) (tmp.getHandle() >> 16);
+			request[7] = (byte) (tmp.getHandle() >> 8);
+			request[8] = (byte) tmp.getHandle();
+
+			return request;
+		}
+		case DELETE_FOLDER_REQUEST: {
+			DeleteFolderRequest tmp = (DeleteFolderRequest) this.payload;
+			int msgLength = 4 + 1 + 4;
+			byte[] request = new byte[msgLength];
+			request[0] = (byte) (msgLength >> 24);
+			request[1] = (byte) (msgLength >> 16);
+			request[2] = (byte) (msgLength >> 8);
+			request[3] = (byte) msgLength;
+			request[4] = 6;
+			request[5] = (byte) (tmp.getHandle() >> 24);
+			request[6] = (byte) (tmp.getHandle() >> 16);
+			request[7] = (byte) (tmp.getHandle() >> 8);
+			request[8] = (byte) tmp.getHandle();
+
+			return request;
+		}
+		case FILE_INFO_REQUEST: {
+			FileInfoRequest tmp = (FileInfoRequest) this.payload;
+			int msgLength = 4 + 1 + 4;
+			byte[] request = new byte[msgLength];
+			request[0] = (byte) (msgLength >> 24);
+			request[1] = (byte) (msgLength >> 16);
+			request[2] = (byte) (msgLength >> 8);
+			request[3] = (byte) msgLength;
+			request[4] = 7;
+			request[5] = (byte) (tmp.getHandle() >> 24);
+			request[6] = (byte) (tmp.getHandle() >> 16);
+			request[7] = (byte) (tmp.getHandle() >> 8);
+			request[8] = (byte) tmp.getHandle();
+
+			return request;
+		}
+		case FOLDER_INFO_REQUEST: {
+			FolderInfoRequest tmp = (FolderInfoRequest) this.payload;
+			int msgLength = 4 + 1 + 4;
+			byte[] request = new byte[msgLength];
+			request[0] = (byte) (msgLength >> 24);
+			request[1] = (byte) (msgLength >> 16);
+			request[2] = (byte) (msgLength >> 8);
+			request[3] = (byte) msgLength;
+			request[4] = 9;
+			request[5] = (byte) (tmp.getHandle() >> 24);
+			request[6] = (byte) (tmp.getHandle() >> 16);
+			request[7] = (byte) (tmp.getHandle() >> 8);
+			request[8] = (byte) tmp.getHandle();
+
+			return request;
+		}
+		case WRITE_FILE_REQUEST: {
+			WriteFileRequest tmp = (WriteFileRequest) this.payload;
+			int msgLength = 4 + 1 + 4 + 4 + tmp.getData().length;
+			byte[] request = new byte[msgLength];
+			request[0] = (byte) (msgLength >> 24);
+			request[1] = (byte) (msgLength >> 16);
+			request[2] = (byte) (msgLength >> 8);
+			request[3] = (byte) msgLength;
+			request[4] = 11;
+			request[5] = (byte) (tmp.getHandle() >> 24);
+			request[6] = (byte) (tmp.getHandle() >> 16);
+			request[7] = (byte) (tmp.getHandle() >> 8);
+			request[8] = (byte) tmp.getHandle();
+			request[9] = (byte) (tmp.getOffset() >> 24);
+			request[10] = (byte) (tmp.getOffset() >> 16);
+			request[11] = (byte) (tmp.getOffset() >> 8);
+			request[12] = (byte) tmp.getOffset();
+			byte[] tmpdata = tmp.getData();
+			for (int i = 0; i < tmpdata.length; i++)
+				request[13 + i] = tmpdata[i];
+
+			return request;
+		}
+		case READ_FILE_REQUEST: {
+			ReadFileRequest tmp = (ReadFileRequest) this.payload;
+			int msgLength = 4 + 1 + 4 + 4 + 4;
+			byte[] request = new byte[msgLength];
+			request[0] = (byte) (msgLength >> 24);
+			request[1] = (byte) (msgLength >> 16);
+			request[2] = (byte) (msgLength >> 8);
+			request[3] = (byte) msgLength;
+			request[4] = 12;
+			request[5] = (byte) (tmp.getHandle() >> 24);
+			request[6] = (byte) (tmp.getHandle() >> 16);
+			request[7] = (byte) (tmp.getHandle() >> 8);
+			request[8] = (byte) tmp.getHandle();
+			request[9] = (byte) (tmp.getOffset() >> 24);
+			request[10] = (byte) (tmp.getOffset() >> 16);
+			request[11] = (byte) (tmp.getOffset() >> 8);
+			request[12] = (byte) tmp.getOffset();
+			request[13] = (byte) (tmp.getLength() >> 24);
+			request[14] = (byte) (tmp.getLength() >> 16);
+			request[15] = (byte) (tmp.getLength() >> 8);
+			request[16] = (byte) tmp.getLength();
+
+			return request;
+		}
+
+		}
+
+		return null;
+	}
+
+	@Override
+	public void unmarshall(ByteBuffer data) throws MarshallingException {
+		switch (payloadType) {
+		case NEW_FILE_RESPONSE: {
+
+			byte[] tmpdata = new byte[data.remaining()];
+			data.get(tmpdata, 0, tmpdata.length);
+			this.payloadType = PayloadType.NEW_FILE_RESPONSE; 
+																
+			int handle = (int) (tmpdata[1] << 24 | tmpdata[2] << 16 | tmpdata[3] << 8 | tmpdata[4]);
+			NewFileResponse tmp = new NewFileResponse(handle);
+			this.payload = tmp;
+
+			break;
+		}
+		case NEW_FOLDER_RESPONSE: {
+
+			byte[] tmpdata = new byte[data.remaining()];
+			data.get(tmpdata, 0, tmpdata.length);
+			this.payloadType = PayloadType.NEW_FOLDER_RESPONSE;
+			int handle = (int) (tmpdata[1] << 24 | tmpdata[2] << 16 | tmpdata[3] << 8 | tmpdata[4]);
+			NewFolderResponse tmp = new NewFolderResponse(handle);
+			this.payload = tmp;
+
+			break;
+		}
+		case FILE_INFO_RESPONSE: {
+
+			byte[] tmpdata = new byte[data.remaining()];
+			data.get(tmpdata, 0, tmpdata.length);
+			this.payloadType = PayloadType.FILE_INFO_RESPONSE;
+			int parent = (int) (tmpdata[1] << 24 | tmpdata[2] << 16 | tmpdata[3] << 8 | tmpdata[4]);
+			int size = (int) (tmpdata[5] << 24 | tmpdata[6] << 16 | tmpdata[7] << 8 | tmpdata[8]);
+			byte namelen = tmpdata[9]; // get name length
+			byte[] tmpname = new byte[namelen];
+			for (int i = 0; i < namelen; i++)
+				tmpname[i] = tmpdata[10 + i];
+			String name = tmpname.toString(); // get file name
+			FileInfoResponse tmp = new FileInfoResponse(parent, size, name);
+			this.payload = tmp;
+
+			break;
+		}
+		case FOLDER_INFO_RESPONSE: {
+			byte[] tmpdata = new byte[data.remaining()];
+			data.get(tmpdata, 0, tmpdata.length);
+			this.payloadType = PayloadType.FOLDER_INFO_RESPONSE;
+			int parent = (int) (tmpdata[1] << 24 | tmpdata[2] << 16 | tmpdata[3] << 8 | tmpdata[4]); 		// get parent
+																										 
+			byte namelen = tmpdata[5];																		// get name length
+			byte[] tmpname = new byte[namelen];
+			int k;
+			for (k = 0; k < namelen; k++)
+				tmpname[k] = tmpdata[6 + k];
+			String name = tmpname.toString(); 														// from byte[] to String for foldername
+												
+			int fliescount = (int) (tmpdata[6 + k] << 24 | tmpdata[7 + k] << 16 | tmpdata[8 + k] << 8 | tmpdata[9 + k]); 
+			// get filescount
+																															 
+			int[] files = new int[fliescount];
+			int i;
+			for (i = 0; i < fliescount; i++)
+				files[i] = (int) (tmpdata[10 + k + i * 4] << 24 | tmpdata[11 + k + i * 4] << 16
+						| tmpdata[12 + k + i * 4] << 8 | tmpdata[13 + k + i * 4]);
+			// from byte to int for files
+
+			int folderscount = (int) (tmpdata[10 + k + i * 4] << 24 | tmpdata[11 + k + i * 4] << 16
+					| tmpdata[12 + k + i * 4] << 8 | tmpdata[13 + k + i * 4]); 										// get folderscount
+																				
+			int[] folders = new int[folderscount];
+			int j;
+			for (j = 0; j < folderscount; j++)
+				folders[j] = (int) (tmpdata[14 + k + i * 4 + j * 4] << 24 | tmpdata[15 + k + i * 4 + j * 4] << 16
+						| tmpdata[16 + k + i * 4 + j * 4] << 8 | tmpdata[17 + k + i * 4 + j * 4]);
+			// from byte to int for folders
+
+			FolderInfoResponse tmp = new FolderInfoResponse(parent, name, files, folders);
+			this.payload = tmp;
+
+			break;
+		}
+		case READ_FILE_RESPONSE: {
+			byte[] tmpdata = new byte[data.remaining()];
+			data.get(tmpdata, 0, tmpdata.length);
+			this.payloadType = PayloadType.READ_FILE_RESPONSE;
+			int size = (int) (tmpdata[1] << 24 | tmpdata[2] << 16 | tmpdata[3] << 8 | tmpdata[4]); // get size of data					
+																									 
+			byte[] readdata = new byte[size];
+			for (int i = 0; i < size; i++)
+				readdata[i] = tmpdata[5 + i]; // get read data
+
+			ReadFileResponse tmp = new ReadFileResponse(readdata);
+			this.payload = tmp;
+
+			break;
+		}
+		case ERROR_RESPONSE: {
+			byte[] tmpdata = new byte[data.remaining()];
+			data.get(tmpdata, 0, tmpdata.length);
+			this.payloadType = PayloadType.ERROR_RESPONSE;
+			byte errorcode = tmpdata[1]; 
+			int size = (int) (tmpdata[2] << 24 | tmpdata[3] << 16 | tmpdata[4] << 8 | tmpdata[5]); // get size of errormessage
+																		
+			byte[] errormsg = new byte[size];
+			for (int i = 0; i < size; i++)
+				errormsg[i] = tmpdata[6 + i]; 															// get errormsg
+
+			String msg = errormsg.toString();
+			ErrorResponse tmp = new ErrorResponse(errorcode, msg);
+			this.payload = tmp;
+
+			break;
+		}
+		}
+	}
+
+}

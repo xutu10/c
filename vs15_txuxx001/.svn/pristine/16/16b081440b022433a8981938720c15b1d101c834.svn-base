@@ -1,0 +1,12 @@
+#include <stdio.h>
+#include <vfilesystem_api.h>
+
+int main(int argc, char **args) {
+	FolderID root = fs_init();
+
+	// Your test code goes here
+
+	fs_destroy();
+
+	return 0;
+}

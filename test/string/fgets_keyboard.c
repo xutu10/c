@@ -1,5 +1,7 @@
 #include<stdio.h>
 
+// fgets has a problem with enter, when several lines are input
+
 struct Student{
 	char age[3];
 	char name[10];

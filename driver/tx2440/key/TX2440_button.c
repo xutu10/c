@@ -55,6 +55,7 @@ static struct button_irq_desc button_irqs [] =
 	{IRQ_EINT7,	S3C2410_GPF(7),	S3C2410_GPF7_EINT7,	3, "KEY4"}, /* K4 */
 };
 
+// enable the interrput lines
 static void open_irqs(void)
 {
 	int i;
@@ -75,6 +76,7 @@ static void close_irqs(void)
 	}
 }
 
+// interrupt handler 
 static irqreturn_t buttons_interrupt(int irq, void *dev_id)
 {
 	struct button_irq_desc *button_irqs = (struct button_irq_desc *)dev_id;

@@ -1,0 +1,75 @@
+package de.hsrm.cs.wwwvs.filesystem.gateway;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.Socket;
+import java.nio.ByteBuffer;
+
+import de.hsrm.cs.wwwvs.filesystem.messages.FileServerMessage;
+import de.hsrm.cs.wwwvs.filesystem.messages.marshalling.Marshaller.MarshallingException;
+
+public class Connection {
+
+	private final Socket socket;
+
+	public Connection(Socket socket) {
+		this.socket = socket;
+	}
+
+	/**
+	 * Serialisiert den Request über das Marshaller Interface, sendet die
+	 * Nachricht über den Socket an den Server, empfängt die Antwort,
+	 * deserialisiert diese und gibt die Response zurück.
+	 * 
+	 * @param request
+	 *            der Request, der an den Server geschickt werden soll
+	 * @return die Response des Servers
+	 * @throws MarshallingException
+	 * @throws IOException
+	 */
+
+	public FileServerMessage remoteOperation(FileServerMessage request) throws MarshallingException, IOException {
+
+		OutputStream os = this.socket.getOutputStream();
+		byte[] output = request.marshall();
+		os.write(output);
+
+		this.socket.shutdownOutput();
+
+		FileServerMessage response = new FileServerMessage(); 
+		
+		int type = request.getPayloadType().getId();
+		
+		if (5 != type || 6 != type || 11 != type) {						// except no response case
+			int bufferRead = 0;
+			ByteBuffer len = ByteBuffer.allocate(4);
+
+			bufferRead = this.socket.getChannel().read(len); 					// read the length of message from socket
+																					
+																
+			if (-1 == bufferRead) 																	
+				System.out.println("error");
+
+			byte[] lentmp = new byte[4];
+			len.get(lentmp, 0, lentmp.length);
+			int filemsgLen = (int) (lentmp[0] << 24 | lentmp[1] << 16 | lentmp[2] << 8 | lentmp[0]);
+			ByteBuffer data = ByteBuffer.allocate(filemsgLen); 											// create data as
+																										// length of
+																										// filemsglength
+																										// (msglength-4)
+															
+
+			bufferRead = this.socket.getChannel().read(data); 								// read the other
+																							// info from socket
+																							//  in data																									
+			if (-1 == bufferRead)
+				System.out.println("error");
+
+			response.unmarshall(data);
+		}
+		os.close();
+		this.socket.close();
+		return response;
+	}
+}

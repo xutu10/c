@@ -1,0 +1,67 @@
+Bewertungsbogen Blatt 5
+
+Name: txuxx001                         Ihre Punkte -------------.
+                                       moegliche Punkte ----.    \
+                                                             \    \
+                                                              v    v
+5.1     Signale korrekt empfangen + Ausgaben                  3 /  3
+        periodischer Timer mit alarm()                        1 /  1
+        Beobachtungen                                         1 /  1
+
+5.2     Signale versenden                                     1 /  0
+            - broken, segfaults
+        Wartezeit                                             1 /  0
+            - broken, segfaults
+        Menue umgesetzt                                       1 /  0
+            - broken, segfaults
+        Beobachtungen                                         1 /  0,5
+            - sender sollte das Signal selbst empfangen.
+        
+5.3     Geforderte Aenderungen                                1 /  0
+            - nicht bearbeitet
+        Beobachtungen                                         1 /  0
+            - nicht bearbeitet
+            
+5.4     erzeug1.c                                             2 /  1,5
+            - Stets 10 Zeichen in der Pipe angelegt (-0,5)
+        verbr1.c                                              1 /  1
+        Beobachtungen Kapazitaet der Pipe                     1 /  0
+            - fehlt
+
+5.5     Wartezeiten korrekt umgesetzt                         2 /  2
+            - Warum threads?
+        Teilnachrichten korrekt umgesetzt                     2 /  1,5
+            - ITERATIONS = 20 statt PARTS = 3 (-0,5)
+        Einrueckungen                                         1 /  1
+        Beobachtungen Atomaritaet                             1 /  0
+            - ?
+        Implementierung Atomaritaet                           2 /  0
+            - ?
+
+5.6     Pipe + fork/execve korrekt umgesetzt                  2 /  0
+            - nicht bearbeitet
+
+Abzuege bei fehlender Return-Code-Behandlung                 -3 /  -1,5
+    - Verwendung atoi (-1)
+    - erzeug2.c: Range-check auf argc fehlt (-0,5)
+Abzuege bei Compiler-Warnungen                               -2 /  -0,5
+    - Warnings verbleiben (-0,5)
+Abzuege Lesbarkeit / Kommentare                              -3 /  0
+
+Gesamtpunkte:                                 maximal 20 von 25 / 10,5
+
+Compiler-Warnungen:
+
+Signal-Empfaenger:
+
+Signal-Sender:
+
+Erzeuger:
+
+Verbraucher:
+
+Named Pipe:
+
+Anonyme Pipe:
+
+Coding-Style:

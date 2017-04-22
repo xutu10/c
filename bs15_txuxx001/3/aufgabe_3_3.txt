@@ -1,0 +1,28 @@
+Betriebssysteme und Rechnerarchitektur
+
+Aufgabe 3.3 - Analyse
+
+Testen Sie Ihre Funktion mit verschiedenen Beispielen. Analysieren Sie,
+wie viele Befehle die Unterroutinen zum Zaehlen der Buchstaben und fuer die
+Umwandlung benoetigen (in Abhaengigkeit von der Laenge der Strings).
+
+Wie viele Befehle benoetigen die Unterroutinen zum Zaehlen und Umwandeln
+der Buchstaben?
+
+Bitte tragen Sie hier Ihre Ergebnisse ein!
+
+- int gross(char *text);
+
+- int klein(char *text);
+
+- char *tausche(char *text);
+
+1.Beispiel AbCd EfZz 
+	tausche =123
+	gross = 66
+	klein=62
+
+2.Beispiel AertG GZs IO
+	tausche =167
+	gross = 75
+	klein=65

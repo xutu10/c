@@ -1,0 +1,719 @@
+1. File
+// remove a file
+#include <stdio.h> 
+int main(void) 
+{ 
+   char file[80]; 
+   /* prompt for file name to delete */ 
+   printf("File to delete: "); 
+   gets(file); 
+   /* delete the file */ 
+   if (remove(file) == 0) 
+      printf("Removed %s.\n",file); 
+   else 
+      perror("remove"); 
+   return 0; 
+} 
+
+//create a file
+FILE* CreateMyFile( char fileName[] )
+{
+FILE* fp;
+fp = fopen( fileName, "w" );
+if( fp != NULL ) 
+{
+printf( "%s has been created!\n", fileName );
+}
+else
+{
+printf( "Cannot create %s\n", fileName );
+}
+return fp;
+}
+
+
+//create folder
+函数名: mkdir
+功 能: 建立一个目录(文件夹)
+用 法: int mkdir(char *pathname);
+程序例: （在win-tc和Dev-c++下运行通过）
+#include <stdio.h>
+#include <process.h>
+#include <dir.h>
+
+int main(void)
+{
+int status;
+system("cls");
+status = mkdir("book"); /*这是在程序所在当前文件夹下创建book*/
+(!status) ? (printf("Directory created\n")) :
+(printf("Unable to create directory\n"));
+system("pause");
+system("dir"); /*显示创建后当前文件夹下的文件信息*/
+system("pause");
+
+status = rmdir("book"); /*删除创建的文件夹book*/
+(!status) ? (printf("Directory deleted\n")) :
+(perror("Unable to delete directory"));
+system("pause");
+return 0;
+} 
+
+// if a folder or file exist
+函数名: access
+功  能: 确定文件的访问权限
+用  法: int access(const char *filename, int amode);
+以前一直没用过这个函数,今天调试程序发现了这个函数,感觉挺好用,尤其是判断一个文件或文件夹是否存在的时候,用不着再find了,文件的话还可以检测读写权限,文件夹的话则只能判断是否存在,下面摘自MSDN：
+
+int _access( const char *path, int mode );
+
+Return Value
+
+Each of these functions returns 0 if the file has the given mode. The function returns –1 if the named file does not exist or is not accessible in the given mode; in this case, errno is set as follows:
+
+EACCES
+
+Access denied: file’s permission setting does not allow specified access.
+
+ENOENT
+
+Filename or path not found.
+
+Parameters
+
+path
+
+File or directory path
+
+mode
+
+Permission setting
+
+Remarks
+
+When used with files, the _access function determines whether the specified file exists and can be accessed as specified by the value of mode. When used with directories, _access determines only whether the specified directory exists; in Windows NT, all directories have read and write access.
+
+mode Value            Checks File For
+00                              Existence only
+02                              Write permission
+04                              Read permission
+06                              Read and write permission
+
+Example
+
+/* ACCESS.C: This example uses _access to check the
+ * file named "ACCESS.C" to see if it exists and if
+ * writing is allowed.
+ */
+
+
+#include  <stdio.h>
+#include  <stdlib.h>
+
+void main( void )
+{
+   /* Check for existence */
+   if( (access( "ACCESS.C", 0 )) != -1 )
+   {
+      printf( "File ACCESS.C exists " );
+      /* Check for write permission */
+      if( (access( "ACCESS.C", 2 )) != -1 )
+         printf( "File ACCESS.C has write permission " );
+   }
+}
+
+Output
+
+File ACCESS.C existsFile ACCESS.C has write permission
+
+
+//get the length of file
+int file_size(char* filename)  
+{  
+    FILE *fp=fopen(filename,"r");  
+    if(!fp) return -1;  
+    fseek(fp,0L,SEEK_END);  
+    int size=ftell(fp);  
+    fclose(fp);  
+      
+    return size;  
+} 
+上述方法利用fseek移动一个文件的存取位置到文件的末尾，然后利用ftell获得目前的文件访问位置。这种方法可以认为是一种间接的获取方式。虽说可以获得文件大小，但是有两个缺点。首先，ftell的返回值为long，在不同环境下占用的字节数也不同，这就可能存在long是四个字节的情况。此时，获取的文件大小就不能超过2G，否则就会出错。
+
+但是，上述缺点在大多数情况下都没问题，超大文件还可以通过fsetpos和fgetpos获取文件大小。最致命的缺陷就是它需要加载文件到内存，然后跳转到文件末尾，这个操作非常耗时！可能在读取少量文件时体现不出，但是当文件达到上万个时，速度就会慢的要命，这种方法相当于把所有的文件都读到内存中一遍！
+
+如果可能，尽量避免采用上述间接的方式获取文件大小。在linux下，还有一种更简单的方式，通过读取文件信息获得文件大小，速度也快很多。代码如下：
+
+[cpp] view plaincopyprint?
+#include <sys/stat.h>  
+int file_size2(char* filename)  
+{  
+    struct stat statbuf;  
+    stat(filename,&statbuf);  
+    int size=statbuf.st_size;  
+  
+    return size;  
+}  
+这种方式首先获得相关文件的状态信息，然后从状态信息中读取大小信息。由于没有读取文件的操作，所以操作速度非常快。强烈建议大家在linux下使用这种方式。Windows平台下肯定也有类似的函数读取文件信息，不过本人常年不在windows下编程，所以在此不做介绍。
+ 
+ 
+// get the length and content of a file
+FILE*fp;
+       fp=fopen("localfile","rb");// localfile文件名       
+       fseek(fp,0L,SEEK_END); /* 定位到文件末尾 */
+　　flen=ftell(fp); /* 得到文件大小 */
+　　p=(char *)malloc(flen+1); /* 根据文件大小动态分配内存空间 */
+　　if(p==NULL)
+　　{
+　　fclose(fp);
+　　return 0;
+　　}
+　　fseek(fp,0L,SEEK_SET); /* 定位到文件开头 */
+　　fread(p,flen,1,fp); /* 一次性读取全部文件内容 */
+　　p[flen]=0; /* 字符串结束标志 */ 
+
+//连接字符串
+    #include<stdio.h>  
+    #include<stdlib.h>  
+    #include<string.h>  
+      
+    char *join1(char *, char*);  
+    void join2(char *, char *);  
+    char *join3(char *, char*);  
+      
+    int main(void) {  
+        char a[4] = "abc"; // char *a = "abc"  
+        char b[4] = "def"; // char *b = "def"  
+      
+        char *c = join3(a, b);  
+        printf("Concatenated String is %s\n", c);  
+      
+        free(c);  
+        c = NULL;  
+      
+        return 0;  
+    }  
+      
+    /*方法一，不改变字符串a,b, 通过malloc，生成第三个字符串c, 返回局部指针变量*/  
+    char *join1(char *a, char *b) {  
+        char *c = (char *) malloc(strlen(a) + strlen(b) + 1); //局部变量，用malloc申请内存  
+        if (c == NULL) exit (1);  
+        char *tempc = c; //把首地址存下来  
+        while (*a != '\0') {  
+            *c++ = *a++;  
+        }  
+        while ((*c++ = *b++) != '\0') {  
+            ;  
+        }  
+        //注意，此时指针c已经指向拼接之后的字符串的结尾'\0' !  
+        return tempc;//返回值是局部malloc申请的指针变量，需在函数调用结束后free之  
+    }  
+      
+      
+    /*方法二，直接改掉字符串a, 此方法有误，见留言板*/  
+    void join2(char *a, char *b) {  
+        //注意，如果在main函数里a,b定义的是字符串常量（如下）：  
+        //char *a = "abc";  
+        //char *b = "def";  
+        //那么join2是行不通的。  
+        //必须这样定义：  
+        //char a[4] = "abc";  
+        //char b[4] = "def";  
+        while (*a != '\0') {  
+            a++;  
+        }  
+        while ((*a++ = *b++) != '\0') {  
+            ;  
+        }  
+    }  
+      
+    /*方法三，调用C库函数,*/  
+    char* join3(char *s1, char *s2)  
+    {  
+        char *result = malloc(strlen(s1)+strlen(s2)+1);//+1 for the zero-terminator  
+        //in real code you would check for errors in malloc here  
+        if (result == NULL) exit (1);  
+      
+        strcpy(result, s1);  
+        strcat(result, s2);  
+      
+        return result;  
+    }  
+
+
+
+I.Linux C 创建目录函数mkdir的mode设置问题
+
+函数原型：
+
+#include <sys/stat.h>
+
+int mkdir(const char *path, mode_t mode);
+
+参数：
+
+path是目录名
+
+mode是目录权限
+
+返回值：
+
+返回0 表示成功， 返回 -1表示错误，并且会设置errno值。
+
+mode模式位：
+
+mode 表示新目录的权限，可以取以下值：
+
+S_IRUSR
+S_IREAD
+
+S_IWUSR
+S_IWRITE
+S_IXUSR
+S_IEXEC
+S_IRWXU
+This is equivalent to (S_IRUSR | S_IWUSR | S_IXUSR).
+S_IRGRP
+Read permission bit for the group owner of the file. Usually 040.
+S_IWGRP
+Write permission bit for the group owner of the file. Usually 020.
+S_IXGRP
+Execute or search permission bit for the group owner of the file. Usually 010.
+S_IRWXG
+This is equivalent to (S_IRGRP | S_IWGRP | S_IXGRP).
+S_IROTH
+Read permission bit for other users. Usually 04.
+S_IWOTH
+Write permission bit for other users. Usually 02.
+S_IXOTH
+Execute or search permission bit for other users. Usually 01.
+S_IRWXO
+This is equivalent to (S_IROTH | S_IWOTH | S_IXOTH).
+S_ISUID
+This is the set-user-ID on execute bit, usually 04000. See How Change Persona.
+S_ISGID
+This is the set-group-ID on execute bit, usually 02000. See How Change Persona.
+S_ISVTX
+This is the sticky bit, usually 01000.
+
+例子：
+
+#include <sys/types.h> #include <sys/stat.h>
+int status;
+
+status = mkdir("/home/newdir", S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
+
+这样就创建了一个newdir目录，权限通过ls -al 查看为
+
+drwxr-xr-x
+
+跟用linux命令mkdir创建的目录权限位一致。
+
+
+
+II. linux下C语言创建多级目录
+
+int   CreateDir(const   char   *sPathName) 
+  { 
+  char   DirName[256]; 
+  strcpy(DirName,   sPathName); 
+  int   i,len   =   strlen(DirName); 
+  if(DirName[len-1]!='/') 
+  strcat(DirName,   "/"); 
+  
+  len   =   strlen(DirName); 
+  
+  for(i=1;   i<len;   i++) 
+  { 
+  if(DirName[i]=='/') 
+  { 
+  DirName[i]   =   0; 
+  if(   access(DirName,   NULL)!=0   ) 
+  { 
+      if(mkdir(DirName,   0755)==-1) 
+      {  
+                      perror("mkdir   error");  
+                      return   -1;  
+      } 
+  } 
+  DirName[i]   =   '/'; 
+  } 
+  } 
+  
+  return   0; 
+  }
+
+III.linux c 编程：创建一个线程，监视某个目录，一旦目录里出现新的文件，就将文件转移到指定的目录里去。
+/*
+头文件
+*/
+#define SRCPATH "srcpath/"
+#define DSTPATH "dstpath/"
+
+int movefile()
+{
+DIR *dir;
+struct dirent *dt;
+FILE *fp1,*fp2;
+char filename1[256],filename2[256];
+char buf[1024];
+int readsize,writesize;
+
+if((dir = opendir(SRCPATH)) == NULL)
+{
+printf("opendir %s error\n",SRCPATH);
+return -1;
+}
+memset(filename1,0,sizeof(filename1));
+strcpy(filename1,SRCPATH);
+memset(filename2,0,sizeof(filename2));
+strcpy(filename2,DSTPATH);
+while(1)
+{
+while((dt = readdir(dir)) != NULL)
+{
+if(strcmp(dt->d_name,".")==0||strcmp(dt->d_name,"..")==0)
+{
+continue;
+}
+//如果这个目录里 还有目录，可以在这加判断
+//这里假设初始为空目录
+strcat(filename1,dt->d_name);
+strcat(filename2,dt->d_name);
+//如果进程资源较少可以直接用linux系统命令
+
+fp1 = fopen(filename1,"rb");
+if(fp1==NULL)
+{
+printf("open %s failed /n",filename1);
+return -1;
+}
+
+fp2 = fopen(filename2,"wb");
+if(fp2==NULL)
+{
+printf("open %s failed /n",filename2);
+fclose(fp1);
+return -1;
+}
+
+while((readsize = fread(buf,sizeof(buf),1,fp1))>0)
+{
+//total += readsize;
+memset(buf,0,sizeof(buf));
+writesize = fwrite(buf,sizeof(buf),1,fp2);
+if(writesize!==readsize)
+{
+printf("write error");
+return -2;
+fclose(fp1);
+fclose(fp2);
+}
+}
+fclose(fp1);
+fclose(fp2);
+rmdir(filename2);
+}
+}
+}
+
+int main(int argc,char **argv)
+{
+pthread_t id1;
+int ret;
+ret = pthread_create(&id1, NULL, (void*)movefile, NULL);
+return ret;
+} 
+
+
+#include <sys/types.h>
+#include <dirent.h>
+#include <unistd.h>
+#include <stdio.h>
+
+int main(){
+    DIR    *dir;
+    struct    dirent    *ptr;
+   
+    dir = opendir("/home/zhangyang/kmeans");
+   
+    while((ptr = readdir(dir)) != NULL)
+        printf("d_name: %s\n", ptr->d_name);
+
+    closedir(dir);
+    return 0;
+}
+
+注意：假设要读取的目录中有多个文件，文件名分别为：1.bin, 2.bin, 3.bin,.....99.bin等
+      程序的读取顺序是这样的：1.bin, 10.bin, 11.bin,....19.bin, 2.bin,       
+      20.bin,...,29.bin,....99.bin
+      而不是我们所期望的1.bin, 2.bin, 3.bin,.....99.bin，可见文件的读取顺序是与文件名有关系的
+
+如果想判断是否为文件夹或者文件，则可以使用如下代码：
+struct stat info;
+stat(path,&info);
+if(S_ISDIR(info.st_mode))
+    printf("This is a directory");
+stat结构及其域如下所示：
+          struct stat {
+              dev_t     st_dev;     /* ID of device containing file */
+              ino_t     st_ino;     /* inode number */
+              mode_t    st_mode;    /* protection */
+              nlink_t   st_nlink;   /* number of hard links */
+              uid_t     st_uid;     /* user ID of owner */
+              gid_t     st_gid;     /* group ID of owner */
+              dev_t     st_rdev;    /* device ID (if special file) */
+              off_t     st_size;    /* total size, in bytes */
+              blksize_t st_blksize; /* blocksize for filesystem I/O */
+              blkcnt_t  st_blocks;  /* number of blocks allocated */
+              time_t    st_atime;   /* time of last access */
+              time_t    st_mtime;   /* time of last modification */
+              time_t    st_ctime;   /* time of last status change */
+          };
+如下的Posix宏用于检测st_mode域的文件类型：
+S_ISREG()   regular file?
+S_ISDIR()   directory?
+S_ISCHR()   character device?
+S_ISBLK()   block device?
+S_ISFIFO()  FIFO (named pipe)?
+S_ISLNK()   symbolic link?
+S_ISSOCK()  socket?
+
+注释：代码中的opendir函数和readdir函数如下所示：
+
+opendir（打开目录）
+
+相关函数
+
+open，readdir，closedir，rewinddir，seekdir，telldir，scandir
+
+表头文件
+
+#include<sys/types.h>
+#include<dirent.h>
+
+定义函数
+
+DIR * opendir(const char * name);
+
+函数说明
+
+opendir()用来打开参数name指定的目录，并返回DIR*形态的目录流，和open()类似，接下来对目录的读取和搜索都要使用此返回值。
+
+返回值
+
+成功则返回DIR* 型态的目录流，打开失败则返回NULL。
+
+错误代码
+
+EACCESS 权限不足
+EMFILE 已达到进程可同时打开的文件数上限。
+ENFILE 已达到系统可同时打开的文件数上限。
+ENOTDIR 参数name非真正的目录
+ENOENT 参数name 指定的目录不存在，或是参数name 为一空字符串。
+ENOMEM 核心内存不足。
+　
+readdir（读取目录）
+
+相关函数
+
+open，opendir，closedir，rewinddir，seekdir，telldir，scandir
+
+表头文件
+
+#include<sys/types.h>
+#include<dirent.h>
+
+定义函数
+
+struct dirent * readdir(DIR * dir);
+
+函数说明
+
+readdir()返回参数dir目录流的下个目录进入点。
+结构dirent定义如下
+struct dirent
+{
+ino_t d_ino;
+ff_t d_off;
+signed short int d_reclen;
+unsigned char d_type;
+har d_name[256];
+};
+d_ino 此目录进入点的inode
+d_off 目录文件开头至此目录进入点的位移
+d_reclen _name的长度，不包含NULL字符
+d_type d_name 所指的文件类型
+d_name 文件名
+
+返回值
+
+成功则返回下个目录进入点。有错误发生或读取到目录文件尾则返回NULL。
+
+附加说明
+
+EBADF参数dir为无效的目录流。
+
+
+
+    //获取指定目录下的所有文件列表 author:wangchangshaui jlu  
+    char** getFileNameArray(const char *path, int* fileCount)  
+    {  
+        int count = 0;  
+        char **fileNameList = NULL;  
+        struct dirent* ent = NULL;  
+        DIR *pDir;  
+        char dir[512];  
+        struct stat statbuf;  
+      
+    //打开目录  
+        if ((pDir = opendir(path)) == NULL)  
+        {  
+            myLog("Cannot open directory:%s\n", path);  
+            return NULL;  
+        }  
+    //读取目录  
+        while ((ent = readdir(pDir)) != NULL)  
+        { //统计当前文件夹下有多少文件（不包括文件夹）  
+    //得到读取文件的绝对路径名  
+            snprintf(dir, 512, "%s/%s", path, ent->d_name);  
+            //得到文件信息  
+            lstat(dir, &statbuf);  
+            //判断是目录还是文件  
+            if (!S_ISDIR(statbuf.st_mode))  
+            {  
+                count++;  
+            }  
+        } //while  
+    //关闭目录  
+        closedir(pDir);  
+    //  myLog("共%d个文件\n", count);  
+      
+    //开辟字符指针数组，用于下一步的开辟容纳文件名字符串的空间  
+        if ((fileNameList = (char**) myMalloc(sizeof(char*) * count)) == NULL)  
+        {  
+            myLog("Malloc heap failed!\n");  
+            return NULL;  
+        }  
+      
+    //打开目录  
+        if ((pDir = opendir(path)) == NULL)  
+        {  
+            myLog("Cannot open directory:%s\n", path);  
+            return NULL;  
+        }  
+    //读取目录  
+        int i;  
+        for (i = 0; (ent = readdir(pDir)) != NULL && i < count;)  
+        {  
+            if (strlen(ent->d_name) <= 0)  
+            {  
+                continue;  
+            }  
+            //得到读取文件的绝对路径名  
+            snprintf(dir, 512, "%s/%s", path, ent->d_name);  
+            //得到文件信息  
+            lstat(dir, &statbuf);  
+            //判断是目录还是文件  
+            if (!S_ISDIR(statbuf.st_mode))  
+            {  
+                if ((fileNameList[i] = (char*) myMalloc(strlen(ent->d_name) + 1))  
+                        == NULL)  
+                {  
+                    myLog("Malloc heap failed!\n");  
+                    return NULL;  
+                }  
+                memset(fileNameList[i], 0, strlen(ent->d_name) + 1);  
+                strcpy(fileNameList[i], ent->d_name);  
+                myLog("第%d个文件:%s\n", i, ent->d_name);  
+                i++;  
+            }  
+        } //for  
+    //关闭目录  
+        closedir(pDir);  
+      
+        *fileCount = count;  
+        return fileNameList;  
+    }  
+
+
+
+    //获取指定目录下的所有文件列表 author:wangchangshaui jlu  
+    char** getFileNameArray(const char *path, int* fileCount)  
+    {  
+        int count = 0;  
+        char **fileNameList = NULL;  
+        struct dirent* ent = NULL;  
+        DIR *pDir;  
+        char dir[512];  
+        struct stat statbuf;  
+      
+    //打开目录  
+        if ((pDir = opendir(path)) == NULL)  
+        {  
+            myLog("Cannot open directory:%s\n", path);  
+            return NULL;  
+        }  
+    //读取目录  
+        while ((ent = readdir(pDir)) != NULL)  
+        { //统计当前文件夹下有多少文件（不包括文件夹）  
+    //得到读取文件的绝对路径名  
+            snprintf(dir, 512, "%s/%s", path, ent->d_name);  
+            //得到文件信息  
+            lstat(dir, &statbuf);  
+            //判断是目录还是文件  
+            if (!S_ISDIR(statbuf.st_mode))  
+            {  
+                count++;  
+            }  
+        } //while  
+    //关闭目录  
+        closedir(pDir);  
+    //  myLog("共%d个文件\n", count);  
+      
+    //开辟字符指针数组，用于下一步的开辟容纳文件名字符串的空间  
+        if ((fileNameList = (char**) myMalloc(sizeof(char*) * count)) == NULL)  
+        {  
+            myLog("Malloc heap failed!\n");  
+            return NULL;  
+        }  
+      
+    //打开目录  
+        if ((pDir = opendir(path)) == NULL)  
+        {  
+            myLog("Cannot open directory:%s\n", path);  
+            return NULL;  
+        }  
+    //读取目录  
+        int i;  
+        for (i = 0; (ent = readdir(pDir)) != NULL && i < count;)  
+        {  
+            if (strlen(ent->d_name) <= 0)  
+            {  
+                continue;  
+            }  
+            //得到读取文件的绝对路径名  
+            snprintf(dir, 512, "%s/%s", path, ent->d_name);  
+            //得到文件信息  
+            lstat(dir, &statbuf);  
+            //判断是目录还是文件  
+            if (!S_ISDIR(statbuf.st_mode))  
+            {  
+                if ((fileNameList[i] = (char*) myMalloc(strlen(ent->d_name) + 1))  
+                        == NULL)  
+                {  
+                    myLog("Malloc heap failed!\n");  
+                    return NULL;  
+                }  
+                memset(fileNameList[i], 0, strlen(ent->d_name) + 1);  
+                strcpy(fileNameList[i], ent->d_name);  
+                myLog("第%d个文件:%s\n", i, ent->d_name);  
+                i++;  
+            }  
+        } //for  
+    //关闭目录  
+        closedir(pDir);  
+      
+        *fileCount = count;  
+        return fileNameList;  
+    }  

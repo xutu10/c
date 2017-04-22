@@ -1,0 +1,53 @@
+Bewertungsbogen Blatt 6
+
+Name: txuxx001                         Ihre Punkte -------------.
+                                       moegliche Punkte ----.    \
+                                                             \    \
+                                                              v    v
+create  SHM erzeugen                                          1 /  1
+        SHM Groesse setzen                                    1 /  1
+ (6.2)  Semaphor Initialisierung                              1 /  1
+destroy SHM loeschen                                        0,5 / 0,5
+leser   Funktionalitaet                                       1 /  1
+schreib Funktionalitaet                                       2 /  2
+        SHM einblenden                                        1 /  1
+ (6.2)  Semaphor Synchronisation                              1 /  1
+run.sh  Skript                                              0,5 / 0,5
+        Beobachtung / Dokumentation                           1 /  1
+
+philo   Bereitstellung der IPC-Objekte                        2 /  1
+            - Semaphoren für philosophen falsch initialisiert. (-0,5)
+            - Initialisierung state-array? (-0,5)
+        Philosophen als Kindprozesse                          1 /  1
+        Synchronisierung                                      2 /  2
+        Korrekte Funktionalitaet                              3 /  2
+            - Nah dran. Benachbarte Philosophen essen zugleich (-1)
+        Initialer Prozess wartet auf Kindprozesse             1 /  1
+        Aufraeumen / Freigabe der IPC-Objekte                 1 /  1
+        Beobachtung / Dokumentation                           1 /  1
+
+Abzuege bei fehlender Return-Code-Behandlung                 -3 /  -2
+    - Anzahl Argumente im schreiber nicht geprüft (-1)
+    - Verwendung atoi() (-1)
+Abzuege bei Compiler-Warnungen                               -2 /  0
+Abzuege Lesbarkeit / Kommentare                              -2 /  0
+
+Gesamtpunkte:                                 maximal 20 von 21 / 17
+
+Compiler-Warnungen:
+
+Create:
+
+Destroy:
+
+Leser:
+
+Schreiber:
+
+run.sh:
+
+Beobachtungen:
+
+Philosophen:
+
+Coding-Style:

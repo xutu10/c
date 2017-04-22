@@ -1,0 +1,49 @@
+Bewertungsbogen Blatt 7
+
+Starke Ähnlichkeit mit cmanr001
+
+Name: txuxx001                         Ihre Punkte -------------.
+                                       moegliche Punkte ----.    \
+                                                             \    \
+                                                              v    v
+7.1     Korrekte Berechnung der abhaengigen Groessen          1 /  1
+        Einlesen der Datei                                    1 /  1
+        Simulation U / korrekte Berechnung Set und Tag        3 /  3
+        Nutzungsarten U, I, D                                 2 /  2
+        Assoziativitaet A2, A4, A8 / LRU                      3 /  3
+        Geforderte Ausgaben                                   1 /  1
+
+7.2     Korrekte Funktionalitaet                              5 /  5
+
+7.3     10K optimale Kombination: Begruendete Auswahl         4 /  0
+			Nope. Gesucht war die optimale Kombination verschiedener
+			Cache-Typen bis zu einer Gesamtgröße von 10K. Die Größe der
+			Cache-Line sollte nicht variiert werden.
+
+Abzuege bei Compiler-Warnungen                               -2 /  0
+Abzuege Lesbarkeit / Kommentare                              -3 /  0
+
+Gesamtpunkte:                                                20 / 16
+
+Cachesim:
+
+Soll-Werte:
+- tomcatv 32K,A1,U: lines 1000000, hits 962481, hit ratio 0.962481
+- tomcatv 32K,A2,U: lines 1000000, hits 966355, hit ratio 0.966355
+- tomcatv 32K,A4,U: lines 1000000, hits 966370, hit ratio 0.966370
+- tomcatv 32K,A8,U: lines 1000000, hits 966370, hit ratio 0.966370
+- tomcatv  8K,A1,I: lines  615544, hits 615260, hit ratio 0.999539
+- tomcatv  8K,A2,I: lines  615544, hits 615276, hit ratio 0.999565
+- tomcatv  8K,A1,D: lines  384456, hits 341232, hit ratio 0.887571
+- tomcatv  8K,A2,D: lines  384456, hits 342237, hit ratio 0.890185
+
+- gcc     32K,A1,U: lines 1000000, hits 958551, hit ratio 0.958551
+- gcc     32K,A2,U: lines 1000000, hits 977364, hit ratio 0.977364
+- gcc     32K,A4,U: lines 1000000, hits 984856, hit ratio 0.984856
+- gcc     32K,A8,U: lines 1000000, hits 988529, hit ratio 0.988529
+- gcc      8K,A1,I: lines  779515, hits 710607, hit ratio 0.911601
+- gcc      8K,A2,I: lines  779515, hits 721328, hit ratio 0.925355
+- gcc      8K,A1,D: lines  220485, hits 208986, hit ratio 0.947847
+- gcc      8K,A2,D: lines  220485, hits 211766, hit ratio 0.960455
+
+10K Cache-Layout:

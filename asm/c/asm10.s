@@ -1,0 +1,32 @@
+	.file	"asm.c"
+	.text
+	.globl	main
+	.type	main, @function
+main:
+.LFB0:
+	.cfi_startproc
+	pushq	%rbp
+	.cfi_def_cfa_offset 16
+	.cfi_offset 6, -16
+	movq	%rsp, %rbp
+	.cfi_def_cfa_register 6
+	movl	%edi, -52(%rbp)
+	movq	%rsi, -64(%rbp)
+	movq	$0, -48(%rbp)
+	movq	$0, -40(%rbp)
+	movq	$0, -32(%rbp)
+	movq	$0, -24(%rbp)
+	movq	$0, -16(%rbp)
+	movl	$5, -48(%rbp)
+	movl	-48(%rbp), %eax
+	addl	$3, %eax
+	movl	%eax, -44(%rbp)
+	movl	$0, %eax
+	popq	%rbp
+	.cfi_def_cfa 7, 8
+	ret
+	.cfi_endproc
+.LFE0:
+	.size	main, .-main
+	.ident	"GCC: (Ubuntu 4.8.4-2ubuntu1~14.04.1) 4.8.4"
+	.section	.note.GNU-stack,"",@progbits
