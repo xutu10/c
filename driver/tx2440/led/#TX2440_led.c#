@@ -77,6 +77,7 @@ static int TX2440_led_ioctl( struct inode *inode, struct file *file, unsigned in
 	{
 		case LED_ON:  //set the pin
 			s3c2410_gpio_setpin(led_table[arg], 0);
+
 			break;
 
 		case LED_OFF:  //clr the pin

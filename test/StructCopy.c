@@ -24,8 +24,9 @@ int main(int argc, char const *argv[])
 */
 	
 	struct String *to;
+	printf("%x\n",&to );
 	init1(to);
-	printf("%s\n",to->data );
+	printf("%x %s\n",to, to->data );
 	// variable to is still null after the methode，即便为指针参数也是copy的，
 	// 指向同一地址，并将地址赋值，当原variable为null，新的copy也对原variable无影响
 
@@ -58,7 +59,7 @@ void init1(struct String *to){
 		if(to->data==NULL) printf("11111\n");// 初始化data为null
 		to->data="mnbv\0";
 	
-	printf("%d\n",&to );
+		printf("%x %x\n",&to, to );
 }
 
 struct String init(){
